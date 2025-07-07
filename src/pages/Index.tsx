@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
 import ControlButtons from '@/components/ControlButtons';
 import ProgressIndicator from '@/components/ProgressIndicator';
+import FileSaveDialog from '@/components/FileSaveDialog';
 
 const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -11,6 +11,8 @@ const Index = () => {
   const [currentTrack, setCurrentTrack] = useState(0);
   const [totalTracks, setTotalTracks] = useState(0);
   const [url, setUrl] = useState('');
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [savePath, setSavePath] = useState('');
 
   // Simulate download progress
   useEffect(() => {
@@ -41,12 +43,17 @@ const Index = () => {
 
   const handleStart = () => {
     if (!url) return;
-    
+    setShowSaveDialog(true);
+  };
+
+  const handleSaveConfirm = (path: string, createFolder: boolean, folderName?: string) => {
+    setSavePath(createFolder && folderName ? `${path}/${folderName}` : path);
     setIsProcessing(true);
     setProgress(0);
     setCurrentTrack(0);
     // Simulate playlist detection
     setTotalTracks(Math.floor(Math.random() * 15) + 1);
+    console.log('Saving to:', createFolder && folderName ? `${path}/${folderName}` : path);
   };
 
   const handleStop = () => {
@@ -59,10 +66,6 @@ const Index = () => {
   const handleUrlSubmit = (submittedUrl: string) => {
     setUrl(submittedUrl);
     console.log('URL submitted:', submittedUrl);
-    // Auto-start when URL is submitted via Enter
-    if (submittedUrl.trim() && !isProcessing) {
-      handleStart();
-    }
   };
 
   const handleReset = () => {
@@ -72,6 +75,7 @@ const Index = () => {
     setCurrentTrack(0);
     setTotalTracks(0);
     setUrl('');
+    setSavePath('');
   };
 
   return (
@@ -98,6 +102,9 @@ const Index = () => {
               isProcessing={isProcessing}
               url={url}
               setUrl={setUrl}
+              progress={progress}
+              currentTrack={currentTrack}
+              totalTracks={totalTracks}
             />
             
             <ControlButtons
@@ -116,6 +123,12 @@ const Index = () => {
           </div>
         </main>
       </div>
+
+      <FileSaveDialog
+        isOpen={showSaveDialog}
+        onClose={() => setShowSaveDialog(false)}
+        onConfirm={handleSaveConfirm}
+      />
     </div>
   );
 };

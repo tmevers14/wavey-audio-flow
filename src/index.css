@@ -94,7 +94,30 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Remove cursor completely */
+/* Enhanced frosted glass effect */
+.frosted-glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.frosted-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+}
+
+/* Remove cursor completely but allow single centered cursor when focused */
 input {
+  caret-color: #3b82f6 !important;
+}
+
+input:not(:focus) {
   caret-color: transparent !important;
 }
