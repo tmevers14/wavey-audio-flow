@@ -1,6 +1,4 @@
 
-import { Play, Square, Settings } from 'lucide-react';
-
 interface ControlButtonsProps {
   isProcessing: boolean;
   onStart: () => void;
@@ -13,35 +11,25 @@ const ControlButtons = ({ isProcessing, onStart, onStop, onOptions }: ControlBut
     <div className="flex gap-6 justify-center items-center mt-12">
       <button
         onClick={isProcessing ? onStop : onStart}
-        className="wavy-glass rounded-2xl px-12 py-6 flex items-center justify-center gap-4 hover:bg-white/30 transition-all duration-300 shadow-xl group min-w-[200px]"
+        className="bg-blue-600 hover:bg-blue-700 rounded-2xl px-12 py-6 flex items-center justify-center transition-all duration-300 shadow-xl group min-w-[200px]"
       >
-        {isProcessing ? (
-          <>
-            <Square size={32} className="text-white group-hover:scale-110 transition-transform" />
-            <div className="text-center">
-              <div className="text-white font-medium text-lg">Continue</div>
-              <div className="text-white/70 text-sm">Continuer | Kontinuar | Continuare</div>
-            </div>
-          </>
-        ) : (
-          <>
-            <Play size={32} className="text-white group-hover:scale-110 transition-transform" />
-            <div className="text-center">
-              <div className="text-white font-medium text-lg">Start / Go</div>
-              <div className="text-white/70 text-sm">Commencer | Empezar | Iniziare</div>
-            </div>
-          </>
-        )}
+        <div className="text-center">
+          <div className="text-white font-medium text-lg">
+            {isProcessing ? "Continue" : "Start / Go"}
+          </div>
+          <div className="text-blue-100 text-sm">
+            {isProcessing ? "Continuer | Kontinuar | Continuare" : "Commencer | Empezar | Iniziare"}
+          </div>
+        </div>
       </button>
 
       <button
         onClick={onOptions}
-        className="wavy-glass rounded-2xl px-12 py-6 flex items-center justify-center gap-4 hover:bg-white/30 transition-all duration-300 shadow-xl group min-w-[200px]"
+        className="bg-blue-500 hover:bg-blue-600 rounded-2xl px-12 py-6 flex items-center justify-center transition-all duration-300 shadow-xl group min-w-[200px]"
       >
-        <Settings size={32} className="text-white group-hover:scale-110 transition-transform" />
         <div className="text-center">
-          <div className="text-white font-medium text-lg">Options</div>
-          <div className="text-white/70 text-sm">Options | Opciones | Opzioni</div>
+          <div className="text-white font-medium text-lg">Next / Again</div>
+          <div className="text-blue-100 text-sm">Suivant | Siguiente | Successivo</div>
         </div>
       </button>
     </div>
