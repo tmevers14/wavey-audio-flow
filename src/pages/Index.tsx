@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
@@ -103,8 +104,8 @@ const Index = () => {
       ></div>
 
       <div className="relative z-10 h-full flex items-center justify-center">
-        {/* Centered unified column */}
-        <div className="flex flex-col items-center justify-center space-y-16">
+        {/* Centered unified column with tighter spacing */}
+        <div className="flex flex-col items-center justify-center space-y-8">
           <URLInput 
             onSubmit={handleUrlSubmit} 
             isProcessing={isProcessing}

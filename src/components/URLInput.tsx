@@ -86,7 +86,7 @@ const URLInput = ({
     <div className="w-full flex flex-col items-center">
       <form onSubmit={handleSubmit} className="relative w-full">
         <div 
-          className="enhanced-frosted-glass rounded-3xl p-12 shadow-2xl relative cursor-text"
+          className="enhanced-frosted-glass rounded-3xl p-8 shadow-2xl relative cursor-text"
           style={{ 
             boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.5)',
             width: '720px',
@@ -100,10 +100,10 @@ const URLInput = ({
           onMouseLeave={() => setIsHovered(false)}
           onClick={() => inputRef.current?.focus()}
         >
-          {/* XLR8 AUDIO title overlay */}
+          {/* XLR8 AUDIO title overlay with larger size */}
           {shouldShowTitle && (
             <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${titleOpacity}`}>
-              <h1 className="text-5xl font-futura font-bold italic text-blue-500 tracking-wide">
+              <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide">
                 XLR8 AUDIO.
               </h1>
             </div>
@@ -117,7 +117,7 @@ const URLInput = ({
             onKeyPress={handleKeyPress}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className="w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-6 relative z-10"
+            className="w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-4 relative z-10"
             disabled={isProcessing}
             style={{ 
               fontSize: '32px',
@@ -127,7 +127,7 @@ const URLInput = ({
           />
           
           {getStatusText() && (
-            <div className="mt-6 text-center">
+            <div className="mt-4 text-center">
               <span className={`text-lg font-medium ${
                 getStatusText().includes('Success') 
                   ? 'text-green-600' 
