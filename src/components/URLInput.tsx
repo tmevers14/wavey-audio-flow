@@ -89,7 +89,7 @@ const URLInput = ({
           className="enhanced-frosted-glass rounded-3xl p-12 shadow-2xl relative cursor-text"
           style={{ 
             boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.5)',
-            width: '680px', // Made wider to exceed button width
+            width: '718px',
             margin: '0 auto',
             borderTop: `2px solid rgba(255, 255, 255, ${0.4 + lighting.top})`,
             borderRight: `2px solid rgba(255, 255, 255, ${0.3 + lighting.right})`,
@@ -103,7 +103,7 @@ const URLInput = ({
           {/* XLR8 AUDIO title overlay */}
           {shouldShowTitle && (
             <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${titleOpacity}`}>
-              <h1 className="text-8xl font-futura font-bold italic text-blue-500 tracking-wide">
+              <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide">
                 XLR8 AUDIO.
               </h1>
             </div>
