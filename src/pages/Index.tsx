@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
 import ControlButtons from '@/components/ControlButtons';
 import ProgressIndicator from '@/components/ProgressIndicator';
+import Logo from '@/components/Logo';
 
 const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -74,18 +76,34 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen wavy-gradient-flow wavy-curves relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/10 blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-white/10 blur-3xl"></div>
-      </div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Organic texture background */}
+      <div 
+        className="absolute inset-0 opacity-80"
+        style={{
+          backgroundImage: 'url(/lovable-uploads/df105e19-7b57-44ea-8f49-f6b2174d3688.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      ></div>
+
+      {/* Overlay for better content visibility */}
+      <div className="absolute inset-0 bg-white/20"></div>
 
       <div className="relative z-10">
         <WavyHeader />
         
-        <main className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4 pt-16">
-          {/* Main content positioned using rule of thirds */}
+        <main className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4">
+          {/* Logo and title positioned using rule of thirds */}
+          <div className="flex flex-col items-center mb-16">
+            <Logo isProcessing={isProcessing} />
+            
+            <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide mt-8">
+              XLR8 AUDIO.
+            </h1>
+          </div>
+          
           <div className="flex flex-col items-center w-full max-w-6xl mx-auto">
             <URLInput 
               onSubmit={handleUrlSubmit} 

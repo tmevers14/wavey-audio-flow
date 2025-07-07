@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 
-interface URLInputProps {
+interfaceURLInputProps {
   onSubmit: (url: string) => void;
   isProcessing: boolean;
 }
@@ -28,11 +28,6 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto px-6 flex flex-col items-center">
-      {/* Centered XLR8 AUDIO text */}
-      <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide mb-12">
-        XLR8 AUDIO.
-      </h1>
-      
       <form onSubmit={handleSubmit} className="relative w-full">
         <div className="wavy-glass rounded-3xl p-8 shadow-2xl">
           <input
@@ -51,7 +46,7 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
           
           {url && (
             <div className="mt-4 text-center">
-              <span className={`text-sm ${isValidUrl(url) ? 'text-green-200' : 'text-red-200'}`}>
+              <span className={`text-sm ${isValidUrl(url) ? 'text-green-600 font-medium' : 'text-red-500 font-medium'}`}>
                 {isValidUrl(url) ? '✓ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL'}
               </span>
             </div>
