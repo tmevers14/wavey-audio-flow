@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
@@ -61,6 +60,11 @@ const Index = () => {
     console.log('URL submitted:', submittedUrl);
   };
 
+  const handleOptions = () => {
+    console.log('Options button clicked');
+    // Future: Open options/preferences modal
+  };
+
   return (
     <div className="min-h-screen wavy-gradient-flow wavy-curves relative overflow-hidden">
       {/* Background decoration */}
@@ -82,6 +86,7 @@ const Index = () => {
             isProcessing={isProcessing}
             onStart={handleStart}
             onStop={handleStop}
+            onOptions={handleOptions}
           />
 
           <ProgressIndicator
