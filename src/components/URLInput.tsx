@@ -27,17 +27,26 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-6">
-      <form onSubmit={handleSubmit} className="relative">
+    <div className="w-full max-w-4xl mx-auto px-6 flex flex-col items-center">
+      {/* Centered XLR8 AUDIO text */}
+      <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide mb-12">
+        XLR8 AUDIO.
+      </h1>
+      
+      <form onSubmit={handleSubmit} className="relative w-full">
         <div className="wavy-glass rounded-3xl p-8 shadow-2xl">
           <input
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="w-full text-center text-2xl font-light bg-transparent text-white outline-none py-4 animate-pulse"
+            className="w-full text-center text-2xl font-light bg-transparent text-gray-700 outline-none py-4"
             disabled={isProcessing}
-            style={{ caretColor: '#3b82f6' }}
+            style={{ 
+              caretColor: '#3b82f6',
+              fontSize: '24px',
+              lineHeight: '1.5'
+            }}
           />
           
           {url && (

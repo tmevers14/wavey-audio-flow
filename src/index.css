@@ -93,3 +93,12 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+/* Enhanced cursor styling */
+input {
+  caret-color: #3b82f6 !important;
+}
+
+input:focus {
+  caret-color: #3b82f6 !important;
+}

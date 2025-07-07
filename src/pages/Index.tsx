@@ -84,25 +84,28 @@ const Index = () => {
       <div className="relative z-10">
         <WavyHeader />
         
-        <main className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4">
-          <URLInput 
-            onSubmit={handleUrlSubmit} 
-            isProcessing={isProcessing}
-          />
-          
-          <ControlButtons
-            isProcessing={isProcessing}
-            onStart={handleStart}
-            onStop={handleStop}
-            onOptions={handleReset}
-          />
+        <main className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4 pt-16">
+          {/* Main content positioned using rule of thirds */}
+          <div className="flex flex-col items-center w-full max-w-6xl mx-auto">
+            <URLInput 
+              onSubmit={handleUrlSubmit} 
+              isProcessing={isProcessing}
+            />
+            
+            <ControlButtons
+              isProcessing={isProcessing}
+              onStart={handleStart}
+              onStop={handleStop}
+              onOptions={handleReset}
+            />
 
-          <ProgressIndicator
-            progress={progress}
-            currentTrack={currentTrack}
-            totalTracks={totalTracks}
-            isVisible={isProcessing || progress > 0}
-          />
+            <ProgressIndicator
+              progress={progress}
+              currentTrack={currentTrack}
+              totalTracks={totalTracks}
+              isVisible={isProcessing || progress > 0}
+            />
+          </div>
         </main>
       </div>
     </div>
