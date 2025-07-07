@@ -104,34 +104,34 @@ const Index = () => {
       ></div>
 
       <div className="relative z-10 h-full flex items-center justify-center">
-        {/* Centered unified column with tighter spacing */}
-        <div className="flex flex-col items-center justify-center space-y-8">
-          <URLInput 
-            onSubmit={handleUrlSubmit} 
-            isProcessing={isProcessing}
-            url={url}
-            setUrl={setUrl}
-            progress={progress}
-            currentTrack={currentTrack}
-            totalTracks={totalTracks}
-            cursorPosition={cursorPosition}
-          />
-          
-          <div className="w-[592px]">
+        {/* Perfectly centered unified column */}
+        <div className="flex flex-col items-center justify-center space-y-8 w-full max-w-none">
+          <div className="flex flex-col items-center space-y-8">
+            <URLInput 
+              onSubmit={handleUrlSubmit} 
+              isProcessing={isProcessing}
+              url={url}
+              setUrl={setUrl}
+              progress={progress}
+              currentTrack={currentTrack}
+              totalTracks={totalTracks}
+              cursorPosition={cursorPosition}
+            />
+            
             <ControlButtons
               isProcessing={isProcessing}
               onStart={handleStart}
               onStop={handleStop}
               onOptions={handleReset}
             />
-          </div>
 
-          <ProgressIndicator
-            progress={progress}
-            currentTrack={currentTrack}
-            totalTracks={totalTracks}
-            isVisible={isProcessing || progress > 0}
-          />
+            <ProgressIndicator
+              progress={progress}
+              currentTrack={currentTrack}
+              totalTracks={totalTracks}
+              isVisible={isProcessing || progress > 0}
+            />
+          </div>
         </div>
       </div>
 
