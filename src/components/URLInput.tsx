@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 
-interfaceURLInputProps {
+interface URLInputProps {
   onSubmit: (url: string) => void;
   isProcessing: boolean;
 }
