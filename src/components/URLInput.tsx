@@ -35,9 +35,9 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="w-full text-center text-2xl font-light bg-transparent text-white outline-none py-4 caret-white animate-pulse"
+            className="w-full text-center text-2xl font-light bg-transparent text-white outline-none py-4 animate-pulse"
             disabled={isProcessing}
-            style={{ caretColor: 'white' }}
+            style={{ caretColor: '#3b82f6' }}
           />
           
           {url && (
