@@ -11,7 +11,7 @@ const ControlButtons = ({ isProcessing, onStart, onStop, onOptions }: ControlBut
     <div className="flex gap-6 justify-center items-center mt-12">
       <button
         onClick={isProcessing ? onStop : onStart}
-        className="bg-blue-600 hover:bg-blue-700 rounded-2xl px-12 py-6 flex items-center justify-center transition-all duration-300 shadow-xl group min-w-[200px]"
+        className="bg-blue-500 hover:bg-blue-600 rounded-2xl px-12 py-6 flex items-center justify-center transition-all duration-300 shadow-xl group min-w-[200px]"
       >
         <div className="text-center">
           <div className="text-white font-medium text-lg">

@@ -58,11 +58,19 @@ const Index = () => {
   const handleUrlSubmit = (submittedUrl: string) => {
     setUrl(submittedUrl);
     console.log('URL submitted:', submittedUrl);
+    // Auto-start when URL is submitted via Enter
+    if (submittedUrl.trim() && !isProcessing) {
+      handleStart();
+    }
   };
 
-  const handleOptions = () => {
-    console.log('Options button clicked');
-    // Future: Open options/preferences modal
+  const handleReset = () => {
+    console.log('Reset button clicked');
+    setIsProcessing(false);
+    setProgress(0);
+    setCurrentTrack(0);
+    setTotalTracks(0);
+    setUrl('');
   };
 
   return (
@@ -86,7 +94,7 @@ const Index = () => {
             isProcessing={isProcessing}
             onStart={handleStart}
             onStop={handleStop}
-            onOptions={handleOptions}
+            onOptions={handleReset}
           />
 
           <ProgressIndicator

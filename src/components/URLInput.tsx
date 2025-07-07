@@ -16,6 +16,12 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  };
+
   const isValidUrl = (str: string) => {
     return str.includes('youtube.com') || str.includes('youtu.be');
   };
@@ -28,9 +34,10 @@ const URLInput = ({ onSubmit, isProcessing }: URLInputProps) => {
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder=">>> Paste YouTube URL here <<<"
-            className="w-full text-center text-2xl font-light bg-transparent text-white placeholder-white/70 outline-none py-4"
+            onKeyPress={handleKeyPress}
+            className="w-full text-center text-2xl font-light bg-transparent text-white outline-none py-4 caret-white animate-pulse"
             disabled={isProcessing}
+            style={{ caretColor: 'white' }}
           />
           
           {url && (
