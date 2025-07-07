@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
@@ -104,21 +103,20 @@ const Index = () => {
       ></div>
 
       <div className="relative z-10 h-full flex items-center justify-center">
-        {/* Unified container for perfect alignment */}
+        {/* Centered unified column */}
         <div className="flex flex-col items-center justify-center space-y-16">
-          {/* Container that defines the width for both input and buttons */}
-          <div className="w-[592px] flex flex-col items-center space-y-16">
-            <URLInput 
-              onSubmit={handleUrlSubmit} 
-              isProcessing={isProcessing}
-              url={url}
-              setUrl={setUrl}
-              progress={progress}
-              currentTrack={currentTrack}
-              totalTracks={totalTracks}
-              cursorPosition={cursorPosition}
-            />
-            
+          <URLInput 
+            onSubmit={handleUrlSubmit} 
+            isProcessing={isProcessing}
+            url={url}
+            setUrl={setUrl}
+            progress={progress}
+            currentTrack={currentTrack}
+            totalTracks={totalTracks}
+            cursorPosition={cursorPosition}
+          />
+          
+          <div className="w-[592px]">
             <ControlButtons
               isProcessing={isProcessing}
               onStart={handleStart}

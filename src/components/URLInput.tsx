@@ -1,3 +1,4 @@
+
 import { useState, useRef } from 'react';
 
 interface URLInputProps {
@@ -85,9 +86,11 @@ const URLInput = ({
     <div className="w-full flex flex-col items-center">
       <form onSubmit={handleSubmit} className="relative w-full">
         <div 
-          className="enhanced-frosted-glass rounded-3xl p-12 shadow-2xl relative cursor-text w-full"
+          className="enhanced-frosted-glass rounded-3xl p-12 shadow-2xl relative cursor-text"
           style={{ 
             boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.5)',
+            width: '720px',
+            margin: '0 auto',
             borderTop: `2px solid rgba(255, 255, 255, ${0.4 + lighting.top})`,
             borderRight: `2px solid rgba(255, 255, 255, ${0.3 + lighting.right})`,
             borderLeft: `2px solid rgba(255, 255, 255, ${0.3 + lighting.left})`,
