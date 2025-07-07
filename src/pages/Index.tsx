@@ -13,6 +13,17 @@ const Index = () => {
   const [url, setUrl] = useState('');
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [savePath, setSavePath] = useState('');
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+
+  // Track cursor position globally
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   // Simulate download progress
   useEffect(() => {
@@ -82,7 +93,7 @@ const Index = () => {
     <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
       {/* Background image with opacity */}
       <div 
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-20"
         style={{
           backgroundImage: 'url(/lovable-uploads/4e3109d5-05cf-43ac-a429-ba199fd8ae52.png)',
           backgroundSize: 'cover',
@@ -91,37 +102,34 @@ const Index = () => {
         }}
       ></div>
 
-      <div className="relative z-10 h-full">
-        <WavyHeader />
-        
-        <main className="flex flex-col items-center justify-center h-[calc(100%-120px)]">
-          {/* Centered group containing input and buttons */}
-          <div className="flex flex-col items-center justify-center space-y-12">
-            <URLInput 
-              onSubmit={handleUrlSubmit} 
-              isProcessing={isProcessing}
-              url={url}
-              setUrl={setUrl}
-              progress={progress}
-              currentTrack={currentTrack}
-              totalTracks={totalTracks}
-            />
-            
-            <ControlButtons
-              isProcessing={isProcessing}
-              onStart={handleStart}
-              onStop={handleStop}
-              onOptions={handleReset}
-            />
+      <div className="relative z-10 h-full flex items-center justify-center">
+        {/* Centered unified column */}
+        <div className="flex flex-col items-center justify-center space-y-16">
+          <URLInput 
+            onSubmit={handleUrlSubmit} 
+            isProcessing={isProcessing}
+            url={url}
+            setUrl={setUrl}
+            progress={progress}
+            currentTrack={currentTrack}
+            totalTracks={totalTracks}
+            cursorPosition={cursorPosition}
+          />
+          
+          <ControlButtons
+            isProcessing={isProcessing}
+            onStart={handleStart}
+            onStop={handleStop}
+            onOptions={handleReset}
+          />
 
-            <ProgressIndicator
-              progress={progress}
-              currentTrack={currentTrack}
-              totalTracks={totalTracks}
-              isVisible={isProcessing || progress > 0}
-            />
-          </div>
-        </main>
+          <ProgressIndicator
+            progress={progress}
+            currentTrack={currentTrack}
+            totalTracks={totalTracks}
+            isVisible={isProcessing || progress > 0}
+          />
+        </div>
       </div>
 
       <FileSaveDialog

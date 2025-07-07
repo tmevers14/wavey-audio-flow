@@ -57,6 +57,39 @@
   }
 }
 
+/* Enhanced frosted glass effect with better blur and transparency */
+.enhanced-frosted-glass {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(30px) saturate(1.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.enhanced-frosted-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  pointer-events: none;
+}
+
+.enhanced-frosted-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  pointer-events: none;
+}
+
 /* Custom WAVY gradient backgrounds */
 .wavy-gradient {
   background: linear-gradient(135deg, hsl(var(--wavy-coral)) 0%, hsl(var(--wavy-coral-light)) 50%, hsl(var(--wavy-coral)) 100%);
@@ -94,7 +127,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Enhanced frosted glass effect */
+/* Original frosted glass effect */
 .frosted-glass {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(25px) saturate(1.2);

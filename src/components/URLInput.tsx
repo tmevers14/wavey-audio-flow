@@ -9,6 +9,7 @@ interface URLInputProps {
   progress?: number;
   currentTrack?: number;
   totalTracks?: number;
+  cursorPosition: { x: number; y: number };
 }
 
 const URLInput = ({ 
@@ -18,11 +19,11 @@ const URLInput = ({
   setUrl, 
   progress = 0, 
   currentTrack = 0, 
-  totalTracks = 0 
+  totalTracks = 0,
+  cursorPosition
 }: URLInputProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,14 +37,6 @@ const URLInput = ({
     if (e.key === 'Enter') {
       handleSubmit(e);
     }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setCursorPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
   };
 
   const isValidUrl = (str: string) => {
@@ -66,34 +59,51 @@ const URLInput = ({
     return '';
   };
 
+  // Calculate inverse lighting effect
+  const getInverseLighting = () => {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    
+    // Normalize cursor position (0 to 1)
+    const normalizedX = cursorPosition.x / windowWidth;
+    const normalizedY = cursorPosition.y / windowHeight;
+    
+    // Inverse lighting: when cursor is left, brighten right edge, etc.
+    const rightIntensity = normalizedX * 0.3; // Cursor left = brighten right
+    const leftIntensity = (1 - normalizedX) * 0.3; // Cursor right = brighten left
+    const topIntensity = (1 - normalizedY) * 0.2; // Cursor bottom = brighten top
+    
+    return {
+      right: rightIntensity,
+      left: leftIntensity,
+      top: topIntensity
+    };
+  };
+
+  const lighting = getInverseLighting();
+
   return (
-    <div className="w-full max-w-5xl mx-auto px-6 flex flex-col items-center">
+    <div className="w-full flex flex-col items-center">
       <form onSubmit={handleSubmit} className="relative w-full">
         <div 
-          className="frosted-glass rounded-3xl p-12 shadow-2xl relative cursor-text"
+          className="enhanced-frosted-glass rounded-3xl p-12 shadow-2xl relative cursor-text"
           style={{ 
-            boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.4)',
-            width: '608px', // Match combined button width (280px + 48px gap + 280px)
-            margin: '0 auto'
+            boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.5)',
+            width: '680px', // Made wider to exceed button width
+            margin: '0 auto',
+            borderTop: `2px solid rgba(255, 255, 255, ${0.4 + lighting.top})`,
+            borderRight: `2px solid rgba(255, 255, 255, ${0.3 + lighting.right})`,
+            borderLeft: `2px solid rgba(255, 255, 255, ${0.3 + lighting.left})`,
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onMouseMove={handleMouseMove}
           onClick={() => inputRef.current?.focus()}
         >
-          {/* Dynamic lighting effect */}
-          <div 
-            className="absolute inset-0 rounded-3xl pointer-events-none transition-opacity duration-300"
-            style={{
-              background: `radial-gradient(circle 150px at ${cursorPosition.x}px ${cursorPosition.y}px, rgba(59, 130, 246, 0.15) 0%, transparent 70%)`,
-              opacity: isHovered ? 1 : 0,
-            }}
-          />
-          
           {/* XLR8 AUDIO title overlay */}
           {shouldShowTitle && (
             <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${titleOpacity}`}>
-              <h1 className="text-7xl font-futura font-bold italic text-blue-500 tracking-wide">
+              <h1 className="text-8xl font-futura font-bold italic text-blue-500 tracking-wide">
                 XLR8 AUDIO.
               </h1>
             </div>
@@ -110,14 +120,15 @@ const URLInput = ({
             className="w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-6 relative z-10"
             disabled={isProcessing}
             style={{ 
-              fontSize: '28px',
-              lineHeight: '1.5'
+              fontSize: '32px',
+              lineHeight: '1.5',
+              caretColor: isFocused ? '#3b82f6' : 'transparent'
             }}
           />
           
           {getStatusText() && (
             <div className="mt-6 text-center">
-              <span className={`text-base font-medium ${
+              <span className={`text-lg font-medium ${
                 getStatusText().includes('Success') 
                   ? 'text-green-600' 
                   : getStatusText().includes('Processing')
