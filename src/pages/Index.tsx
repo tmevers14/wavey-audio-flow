@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
@@ -74,10 +75,10 @@ const Index = () => {
   };
 
   return (
-    <div className="w-full h-screen aspect-video relative overflow-hidden">
-      {/* New organic pattern background */}
+    <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
+      {/* Background image with opacity */}
       <div 
-        className="absolute inset-0"
+        className="absolute inset-0 opacity-30"
         style={{
           backgroundImage: 'url(/lovable-uploads/4e3109d5-05cf-43ac-a429-ba199fd8ae52.png)',
           backgroundSize: 'cover',
@@ -91,7 +92,7 @@ const Index = () => {
         
         <main className="flex flex-col items-center justify-center h-[calc(100%-120px)]">
           {/* Centered group containing input and buttons */}
-          <div className="flex flex-col items-center justify-center space-y-8">
+          <div className="flex flex-col items-center justify-center space-y-12">
             <URLInput 
               onSubmit={handleUrlSubmit} 
               isProcessing={isProcessing}

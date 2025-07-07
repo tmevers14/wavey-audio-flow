@@ -94,23 +94,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Enhanced cursor styling - bigger, taller, bolder */
+/* Remove cursor completely */
 input {
-  caret-color: #3b82f6 !important;
-}
-
-input:focus {
-  caret-color: #3b82f6 !important;
-  caret-width: 3px !important;
-}
-
-/* Custom caret animation for better visibility */
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: #3b82f6; }
-}
-
-input:focus {
-  animation: blink-caret 1s infinite;
-  border-right: 3px solid #3b82f6;
+  caret-color: transparent !important;
 }

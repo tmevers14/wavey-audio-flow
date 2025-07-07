@@ -34,17 +34,21 @@ const URLInput = ({ onSubmit, isProcessing, url, setUrl }: URLInputProps) => {
   const titleOpacity = isHovered ? 'opacity-50' : 'opacity-100';
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-6 flex flex-col items-center">
+    <div className="w-full max-w-5xl mx-auto px-6 flex flex-col items-center">
       <form onSubmit={handleSubmit} className="relative w-full">
         <div 
-          className="wavy-glass rounded-3xl p-8 shadow-2xl relative"
+          className="wavy-glass rounded-3xl p-12 shadow-2xl relative cursor-text"
+          style={{ 
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.3)' 
+          }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onClick={() => inputRef.current?.focus()}
         >
           {/* XLR8 AUDIO title overlay */}
           {shouldShowTitle && (
             <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${titleOpacity}`}>
-              <h1 className="text-4xl font-futura font-bold italic text-blue-500 tracking-wide">
+              <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide">
                 XLR8 AUDIO.
               </h1>
             </div>
@@ -58,18 +62,18 @@ const URLInput = ({ onSubmit, isProcessing, url, setUrl }: URLInputProps) => {
             onKeyPress={handleKeyPress}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className="w-full text-center text-2xl font-light bg-transparent text-gray-700 outline-none py-4 relative z-10"
+            className="w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-6 relative z-10"
             disabled={isProcessing}
             style={{ 
-              caretColor: '#3b82f6',
-              fontSize: '24px',
+              caretColor: 'transparent',
+              fontSize: '28px',
               lineHeight: '1.5'
             }}
           />
           
           {url && (
-            <div className="mt-4 text-center">
-              <span className={`text-sm ${isValidUrl(url) ? 'text-green-600 font-medium' : 'text-red-500 font-medium'}`}>
+            <div className="mt-6 text-center">
+              <span className={`text-base ${isValidUrl(url) ? 'text-green-600 font-medium' : 'text-red-500 font-medium'}`}>
                 {isValidUrl(url) ? '✓ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL'}
               </span>
             </div>
