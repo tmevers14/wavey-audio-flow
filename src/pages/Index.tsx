@@ -1,10 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
 import ControlButtons from '@/components/ControlButtons';
 import ProgressIndicator from '@/components/ProgressIndicator';
-import Logo from '@/components/Logo';
 
 const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -76,38 +74,29 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Organic texture background */}
+    <div className="w-full h-screen aspect-video relative overflow-hidden">
+      {/* New organic pattern background */}
       <div 
-        className="absolute inset-0 opacity-80"
+        className="absolute inset-0"
         style={{
-          backgroundImage: 'url(/lovable-uploads/df105e19-7b57-44ea-8f49-f6b2174d3688.png)',
+          backgroundImage: 'url(/lovable-uploads/4e3109d5-05cf-43ac-a429-ba199fd8ae52.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
         }}
       ></div>
 
-      {/* Overlay for better content visibility */}
-      <div className="absolute inset-0 bg-white/20"></div>
-
-      <div className="relative z-10">
+      <div className="relative z-10 h-full">
         <WavyHeader />
         
-        <main className="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-4">
-          {/* Logo and title positioned using rule of thirds */}
-          <div className="flex flex-col items-center mb-16">
-            <Logo isProcessing={isProcessing} />
-            
-            <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide mt-8">
-              XLR8 AUDIO.
-            </h1>
-          </div>
-          
-          <div className="flex flex-col items-center w-full max-w-6xl mx-auto">
+        <main className="flex flex-col items-center justify-center h-[calc(100%-120px)]">
+          {/* Centered group containing input and buttons */}
+          <div className="flex flex-col items-center justify-center space-y-8">
             <URLInput 
               onSubmit={handleUrlSubmit} 
               isProcessing={isProcessing}
+              url={url}
+              setUrl={setUrl}
             />
             
             <ControlButtons
