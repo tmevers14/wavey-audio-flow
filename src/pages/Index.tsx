@@ -4,6 +4,7 @@ import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
 import ControlButtons from '@/components/ControlButtons';
 import FileSaveDialog from '@/components/FileSaveDialog';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -15,6 +16,7 @@ const Index = () => {
   const [savePath, setSavePath] = useState('');
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [showSuccess, setShowSuccess] = useState(false);
+  const [downloadId, setDownloadId] = useState<string | null>(null);
 
   // Track cursor position globally
   useEffect(() => {
@@ -26,50 +28,69 @@ const Index = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Simulate download progress
+  // Poll download status
   useEffect(() => {
     let interval: NodeJS.Timeout;
     
-    if (isProcessing) {
-      setShowSuccess(false);
-      interval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            setIsProcessing(false);
-            setShowSuccess(true);
-            // Hide success message after 3 seconds
-            setTimeout(() => setShowSuccess(false), 3000);
-            return 100;
+    if (isProcessing && downloadId) {
+      interval = setInterval(async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke('get-download-status', {
+            body: { id: downloadId }
+          });
+          
+          if (error) throw error;
+          
+          if (data) {
+            setProgress(data.progress || 0);
+            setCurrentTrack(data.current_track || 0);
+            setTotalTracks(data.total_tracks || 0);
+            
+            if (data.status === 'completed') {
+              setIsProcessing(false);
+              setShowSuccess(true);
+              setTimeout(() => setShowSuccess(false), 3000);
+            }
           }
-          
-          // Update track count based on progress
-          const newProgress = prev + Math.random() * 3;
-          const tracks = Math.ceil((newProgress / 100) * totalTracks);
-          setCurrentTrack(Math.min(tracks, totalTracks));
-          
-          return Math.min(newProgress, 100);
-        });
-      }, 200);
+        } catch (error) {
+          console.error('Failed to get download status:', error);
+        }
+      }, 1000);
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isProcessing, totalTracks]);
+  }, [isProcessing, downloadId]);
 
   const handleStart = () => {
     if (!url) return;
     setShowSaveDialog(true);
   };
 
-  const handleSaveConfirm = (path: string, createFolder: boolean, folderName?: string) => {
-    setSavePath(createFolder && folderName ? `${path}/${folderName}` : path);
-    setIsProcessing(true);
-    setProgress(0);
-    setCurrentTrack(0);
-    // Simulate playlist detection
-    setTotalTracks(Math.floor(Math.random() * 15) + 1);
-    console.log('Saving to:', createFolder && folderName ? `${path}/${folderName}` : path);
+  const handleSaveConfirm = async (path: string, createFolder: boolean, folderName?: string) => {
+    const finalPath = createFolder && folderName ? `${path}/${folderName}` : path;
+    setSavePath(finalPath);
+    setShowSaveDialog(false);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('start-download', {
+        body: { 
+          youtube_url: url,
+          save_path: finalPath
+        }
+      });
+      
+      if (error) throw error;
+      
+      setDownloadId(data.download_id);
+      setIsProcessing(true);
+      setProgress(0);
+      setCurrentTrack(0);
+      setTotalTracks(0);
+    } catch (error) {
+      console.error('Failed to start download:', error);
+    }
   };
 
   const handleStop = () => {

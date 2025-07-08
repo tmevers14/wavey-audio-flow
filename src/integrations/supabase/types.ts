@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      downloads: {
+        Row: {
+          artist: string | null
+          channel_name: string | null
+          created_at: string
+          current_track: number | null
+          file_path: string | null
+          id: string
+          metadata: Json | null
+          progress: number | null
+          status: string
+          title: string | null
+          total_tracks: number | null
+          updated_at: string
+          user_id: string | null
+          youtube_url: string
+        }
+        Insert: {
+          artist?: string | null
+          channel_name?: string | null
+          created_at?: string
+          current_track?: number | null
+          file_path?: string | null
+          id?: string
+          metadata?: Json | null
+          progress?: number | null
+          status?: string
+          title?: string | null
+          total_tracks?: number | null
+          updated_at?: string
+          user_id?: string | null
+          youtube_url: string
+        }
+        Update: {
+          artist?: string | null
+          channel_name?: string | null
+          created_at?: string
+          current_track?: number | null
+          file_path?: string | null
+          id?: string
+          metadata?: Json | null
+          progress?: number | null
+          status?: string
+          title?: string | null
+          total_tracks?: number | null
+          updated_at?: string
+          user_id?: string | null
+          youtube_url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
