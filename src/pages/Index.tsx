@@ -15,6 +15,7 @@ const Index = () => {
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [savePath, setSavePath] = useState('');
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Track cursor position globally
   useEffect(() => {
@@ -31,10 +32,14 @@ const Index = () => {
     let interval: NodeJS.Timeout;
     
     if (isProcessing) {
+      setShowSuccess(false);
       interval = setInterval(() => {
         setProgress(prev => {
           if (prev >= 100) {
             setIsProcessing(false);
+            setShowSuccess(true);
+            // Hide success message after 3 seconds
+            setTimeout(() => setShowSuccess(false), 3000);
             return 100;
           }
           
@@ -73,6 +78,7 @@ const Index = () => {
     setProgress(0);
     setCurrentTrack(0);
     setTotalTracks(0);
+    setShowSuccess(false);
   };
 
   const handleUrlSubmit = (submittedUrl: string) => {
@@ -88,13 +94,16 @@ const Index = () => {
     setTotalTracks(0);
     setUrl('');
     setSavePath('');
+    setShowSuccess(false);
   };
 
   return (
     <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
-      {/* Background image with opacity */}
+      {/* Static background image */}
       <div 
-        className="absolute inset-0 opacity-20"
+        className={`absolute inset-0 opacity-20 transition-opacity duration-500 ${
+          isProcessing ? 'opacity-0' : 'opacity-20'
+        }`}
         style={{
           backgroundImage: 'url(/lovable-uploads/4e3109d5-05cf-43ac-a429-ba199fd8ae52.png)',
           backgroundSize: 'cover',
@@ -102,6 +111,41 @@ const Index = () => {
           backgroundRepeat: 'no-repeat'
         }}
       ></div>
+
+      {/* Video background - only visible during processing */}
+      <div className={`absolute inset-0 transition-opacity duration-500 ${
+        isProcessing ? 'opacity-20' : 'opacity-0 pointer-events-none'
+      }`}>
+        <iframe
+          src="https://player.cloudinary.com/embed/?cloud_name=df2ohmntv&public_id=fluid_movie_smaller_fzvobk&profile=cld-looping"
+          width="100%"
+          height="100%"
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+          allowFullScreen
+          frameBorder="0"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ 
+            transform: 'scale(1.1)',
+            filter: 'blur(0.5px)'
+          }}
+        />
+      </div>
+
+      {/* Success background overlay */}
+      <div className={`absolute inset-0 transition-opacity duration-500 ${
+        showSuccess ? 'opacity-30' : 'opacity-0 pointer-events-none'
+      }`}>
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url(/lovable-uploads/4e3109d5-05cf-43ac-a429-ba199fd8ae52.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'brightness(1.2) saturate(1.1)'
+          }}
+        ></div>
+      </div>
 
       <div className="relative z-10 h-full flex items-center justify-center">
         {/* Perfectly centered unified column */}
