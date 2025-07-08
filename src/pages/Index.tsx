@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import WavyHeader from '@/components/WavyHeader';
 import URLInput from '@/components/URLInput';
 import ControlButtons from '@/components/ControlButtons';
-import ProgressIndicator from '@/components/ProgressIndicator';
 import FileSaveDialog from '@/components/FileSaveDialog';
 
 const Index = () => {
@@ -99,9 +98,9 @@ const Index = () => {
 
   return (
     <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
-      {/* Static background image */}
+      {/* Static background image - fade to 0% opacity during processing */}
       <div 
-        className={`absolute inset-0 opacity-20 transition-opacity duration-500 ${
+        className={`absolute inset-0 transition-opacity duration-500 ${
           isProcessing ? 'opacity-0' : 'opacity-20'
         }`}
         style={{
@@ -112,7 +111,7 @@ const Index = () => {
         }}
       ></div>
 
-      {/* Video background - only visible during processing */}
+      {/* Video background - only visible during processing at 20% opacity */}
       <div className={`absolute inset-0 transition-opacity duration-500 ${
         isProcessing ? 'opacity-20' : 'opacity-0 pointer-events-none'
       }`}>
@@ -160,6 +159,7 @@ const Index = () => {
               currentTrack={currentTrack}
               totalTracks={totalTracks}
               cursorPosition={cursorPosition}
+              onStart={handleStart}
             />
             
             <ControlButtons
@@ -167,13 +167,6 @@ const Index = () => {
               onStart={handleStart}
               onStop={handleStop}
               onOptions={handleReset}
-            />
-
-            <ProgressIndicator
-              progress={progress}
-              currentTrack={currentTrack}
-              totalTracks={totalTracks}
-              isVisible={isProcessing || progress > 0}
             />
           </div>
         </div>

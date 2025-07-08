@@ -10,6 +10,7 @@ interface URLInputProps {
   currentTrack?: number;
   totalTracks?: number;
   cursorPosition: { x: number; y: number };
+  onStart: () => void;
 }
 
 const URLInput = ({ 
@@ -20,7 +21,8 @@ const URLInput = ({
   progress = 0, 
   currentTrack = 0, 
   totalTracks = 0,
-  cursorPosition
+  cursorPosition,
+  onStart
 }: URLInputProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -28,14 +30,14 @@ const URLInput = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (url.trim() && !isProcessing) {
-      onSubmit(url.trim());
+    if (url.trim() && !isProcessing && isValidUrl(url.trim())) {
+      onStart();
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSubmit(e);
+    if (e.key === 'Enter' && url.trim() && !isProcessing && isValidUrl(url.trim())) {
+      onStart();
     }
   };
 
@@ -51,7 +53,7 @@ const URLInput = ({
       return `Processing ${currentTrack}/${totalTracks} | ${Math.round(progress)}% Complete`;
     }
     if (progress === 100 && !isProcessing) {
-      return 'Success!';
+      return 'Download complete';
     }
     if (url && !isProcessing) {
       return isValidUrl(url) ? '✓ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL';
@@ -129,7 +131,7 @@ const URLInput = ({
           {getStatusText() && (
             <div className="mt-4 text-center">
               <span className={`text-lg font-medium ${
-                getStatusText().includes('Success') 
+                getStatusText().includes('complete') 
                   ? 'text-green-600' 
                   : getStatusText().includes('Processing')
                   ? 'text-blue-600'
