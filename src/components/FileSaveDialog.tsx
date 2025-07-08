@@ -1,9 +1,20 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+
+// Type declaration for Electron API
+declare global {
+  interface Window {
+    electronAPI?: {
+      showOpenDialog: (options: any) => Promise<{ canceled: boolean; filePaths: string[] }>;
+      onDownloadFolderSelected: (callback: (folderPath: string) => void) => void;
+      platform: string;
+    };
+  }
+}
 
 interface FileSaveDialogProps {
   isOpen: boolean;
@@ -15,15 +26,44 @@ const FileSaveDialog = ({ isOpen, onClose, onConfirm }: FileSaveDialogProps) => 
   const [selectedPath, setSelectedPath] = useState('');
   const [createFolder, setCreateFolder] = useState(false);
   const [folderName, setFolderName] = useState('');
+  const isElectron = typeof window !== 'undefined' && window.electronAPI;
+
+  useEffect(() => {
+    if (isElectron && window.electronAPI?.onDownloadFolderSelected) {
+      window.electronAPI.onDownloadFolderSelected((folderPath: string) => {
+        setSelectedPath(folderPath);
+      });
+    }
+  }, [isElectron]);
 
   const handleSelectDirectory = async () => {
-    try {
-      // For now, we'll simulate directory selection
-      // In a real implementation, you'd use the File System Access API
-      const mockPath = '/Users/username/Downloads';
-      setSelectedPath(mockPath);
-    } catch (error) {
-      console.error('Error selecting directory:', error);
+    if (isElectron && window.electronAPI?.showOpenDialog) {
+      try {
+        const result = await window.electronAPI.showOpenDialog({
+          properties: ['openDirectory'],
+          title: 'Select Download Folder'
+        });
+        
+        if (!result.canceled && result.filePaths.length > 0) {
+          setSelectedPath(result.filePaths[0]);
+        }
+      } catch (error) {
+        console.error('Failed to open folder dialog:', error);
+      }
+    } else {
+      // Fallback for web version - use File System Access API if available
+      try {
+        if ('showDirectoryPicker' in window) {
+          const dirHandle = await (window as any).showDirectoryPicker();
+          setSelectedPath(dirHandle.name || 'Selected Folder');
+        } else {
+          // Fallback simulation for web
+          const mockPath = '/Users/username/Downloads';
+          setSelectedPath(mockPath);
+        }
+      } catch (error) {
+        console.error('Error selecting directory:', error);
+      }
     }
   };
 
