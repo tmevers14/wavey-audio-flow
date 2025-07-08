@@ -38,6 +38,12 @@ const FileSaveDialog = ({ isOpen, onClose, onConfirm }: FileSaveDialogProps) => 
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && selectedPath && (!createFolder || folderName.trim())) {
+      handleConfirm();
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -81,6 +87,7 @@ const FileSaveDialog = ({ isOpen, onClose, onConfirm }: FileSaveDialogProps) => 
                 placeholder="What should the folder be called?"
                 value={folderName}
                 onChange={(e) => setFolderName(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
             </div>
           )}

@@ -97,8 +97,8 @@ const Index = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
-      {/* Static background image - fade to 0% opacity during processing */}
+    <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden">
+      {/* Static background image - opacity-20 when idle or success, opacity-0 during processing */}
       <div 
         className={`absolute inset-0 transition-opacity duration-500 ${
           isProcessing ? 'opacity-0' : 'opacity-20'
@@ -130,22 +130,6 @@ const Index = () => {
         />
       </div>
 
-      {/* Success background overlay */}
-      <div className={`absolute inset-0 transition-opacity duration-500 ${
-        showSuccess ? 'opacity-30' : 'opacity-0 pointer-events-none'
-      }`}>
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'url(/lovable-uploads/4e3109d5-05cf-43ac-a429-ba199fd8ae52.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            filter: 'brightness(1.2) saturate(1.1)'
-          }}
-        ></div>
-      </div>
-
       <div className="relative z-10 h-full flex items-center justify-center">
         {/* Perfectly centered unified column */}
         <div className="flex flex-col items-center justify-center space-y-8 w-full max-w-none">
@@ -160,6 +144,7 @@ const Index = () => {
               totalTracks={totalTracks}
               cursorPosition={cursorPosition}
               onStart={handleStart}
+              showSuccess={showSuccess}
             />
             
             <ControlButtons

@@ -11,6 +11,7 @@ interface URLInputProps {
   totalTracks?: number;
   cursorPosition: { x: number; y: number };
   onStart: () => void;
+  showSuccess?: boolean;
 }
 
 const URLInput = ({ 
@@ -22,7 +23,8 @@ const URLInput = ({
   currentTrack = 0, 
   totalTracks = 0,
   cursorPosition,
-  onStart
+  onStart,
+  showSuccess = false
 }: URLInputProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -52,8 +54,8 @@ const URLInput = ({
     if (isProcessing && totalTracks > 0) {
       return `Processing ${currentTrack}/${totalTracks} | ${Math.round(progress)}% Complete`;
     }
-    if (progress === 100 && !isProcessing) {
-      return 'Download complete';
+    if (showSuccess || (progress === 100 && !isProcessing)) {
+      return '✅ Success!';
     }
     if (url && !isProcessing) {
       return isValidUrl(url) ? '✓ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL';
@@ -131,7 +133,7 @@ const URLInput = ({
           {getStatusText() && (
             <div className="mt-4 text-center">
               <span className={`text-lg font-medium ${
-                getStatusText().includes('complete') 
+                getStatusText().includes('Success') 
                   ? 'text-green-600' 
                   : getStatusText().includes('Processing')
                   ? 'text-blue-600'
