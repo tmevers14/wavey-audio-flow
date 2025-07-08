@@ -34,8 +34,12 @@ const ControlButtons = ({ isProcessing, onStart, onStop, onOptions }: ControlBut
         }}
       >
         <div className="text-center">
-          <div className="text-white font-medium text-xl">Next / Again</div>
-          <div className="text-blue-100 text-sm whitespace-nowrap">Suivant | Siguiente | Successivo</div>
+          <div className="text-white font-medium text-xl">
+            {isProcessing ? "Cancel / Terminate" : "Next / Again"}
+          </div>
+          <div className="text-blue-100 text-sm whitespace-nowrap">
+            {isProcessing ? "Annuler | Cancelar | Terminare" : "Suivant | Siguiente | Successivo"}
+          </div>
         </div>
       </button>
     </div>

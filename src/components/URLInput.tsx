@@ -55,7 +55,7 @@ const URLInput = ({
       return `Processing ${currentTrack}/${totalTracks} | ${Math.round(progress)}% Complete`;
     }
     if (showSuccess || (progress === 100 && !isProcessing)) {
-      return '✅ Success!';
+      return 'Success!';
     }
     if (url && !isProcessing) {
       return isValidUrl(url) ? '✓ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL';

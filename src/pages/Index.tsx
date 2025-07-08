@@ -100,7 +100,7 @@ const Index = () => {
     <div className="w-full h-screen bg-[#f2f2f2] relative overflow-hidden">
       {/* Static background image - opacity-20 when idle or success, opacity-0 during processing */}
       <div 
-        className={`absolute inset-0 transition-opacity duration-500 ${
+        className={`absolute inset-0 transition-opacity duration-300 ${
           isProcessing ? 'opacity-0' : 'opacity-20'
         }`}
         style={{
@@ -111,8 +111,8 @@ const Index = () => {
         }}
       ></div>
 
-      {/* Video background - only visible during processing at 20% opacity */}
-      <div className={`absolute inset-0 transition-opacity duration-500 ${
+      {/* Video background - only visible during processing at 20% opacity with border fix */}
+      <div className={`absolute inset-0 transition-opacity duration-300 ${
         isProcessing ? 'opacity-20' : 'opacity-0 pointer-events-none'
       }`}>
         <iframe
@@ -124,7 +124,7 @@ const Index = () => {
           frameBorder="0"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ 
-            transform: 'scale(1.1)',
+            transform: 'scale(1.15)',
             filter: 'blur(0.5px)'
           }}
         />
