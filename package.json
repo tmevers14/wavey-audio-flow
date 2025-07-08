@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "concurrently \"npm run dev\" \"wait-on http://localhost:8080 && electron public/electron.js\"",
+    "electron:pack": "npm run build && electron-builder --publish=never",
+    "electron:dist": "npm run build && electron-builder --publish=always"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
