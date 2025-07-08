@@ -59,16 +59,6 @@ const URLInput = ({
     return '';
   };
 
-  // Function to truncate URL in the middle for display
-  const getTruncatedUrl = (url: string, maxLength: number = 50) => {
-    if (url.length <= maxLength) return url;
-    
-    const startLength = Math.floor(maxLength * 0.4);
-    const endLength = Math.floor(maxLength * 0.4);
-    
-    return url.substring(0, startLength) + '...' + url.substring(url.length - endLength);
-  };
-
   // Calculate inverse lighting effect
   const getInverseLighting = () => {
     const windowWidth = window.innerWidth;
@@ -98,8 +88,6 @@ const URLInput = ({
         <div 
           className="enhanced-frosted-glass rounded-3xl p-8 shadow-2xl relative cursor-text"
           style={{ 
-            background: 'rgba(255, 255, 255, 0.06)', // More translucent background
-            backdropFilter: 'blur(30px) saturate(1.4)',
             boxShadow: '0 35px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.5)',
             width: '720px',
             margin: '0 auto',
@@ -115,13 +103,12 @@ const URLInput = ({
           {/* XLR8 AUDIO title overlay with larger size */}
           {shouldShowTitle && (
             <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${titleOpacity}`}>
-              <h1 className="text-7xl font-futura font-bold italic text-blue-500 tracking-wide">
+              <h1 className="text-6xl font-futura font-bold italic text-blue-500 tracking-wide">
                 XLR8 AUDIO.
               </h1>
             </div>
           )}
           
-          {/* Hidden actual input for functionality */}
           <input
             ref={inputRef}
             type="text"
@@ -130,28 +117,14 @@ const URLInput = ({
             onKeyPress={handleKeyPress}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className="absolute opacity-0 w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-4"
+            className="w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-4 relative z-10"
             disabled={isProcessing}
             style={{ 
               fontSize: '32px',
               lineHeight: '1.5',
-              caretColor: 'transparent'
+              caretColor: isFocused ? '#3b82f6' : 'transparent'
             }}
           />
-          
-          {/* Display div showing truncated URL */}
-          <div 
-            className="w-full text-center text-3xl font-light bg-transparent text-blue-500 outline-none py-4 relative z-10 pointer-events-none"
-            style={{ 
-              fontSize: '32px',
-              lineHeight: '1.5'
-            }}
-          >
-            {url && isFocused ? getTruncatedUrl(url) : url}
-            {isFocused && url && (
-              <span className="animate-pulse">|</span>
-            )}
-          </div>
           
           {getStatusText() && (
             <div className="mt-4 text-center">
