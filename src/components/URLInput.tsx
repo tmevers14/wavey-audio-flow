@@ -130,19 +130,22 @@ const URLInput = ({
             }}
           />
           
+          {/* Status feedback box */}
           {getStatusText() && (
-            <div className="mt-4 text-center">
-              <span className={`text-lg font-medium ${
-                getStatusText().includes('Success') 
-                  ? 'text-green-600' 
-                  : getStatusText().includes('Processing')
-                  ? 'text-blue-600'
-                  : getStatusText().includes('Valid') 
-                  ? 'text-green-600' 
-                  : 'text-red-500'
-              }`}>
-                {getStatusText()}
-              </span>
+            <div className="mt-6 flex justify-center">
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl px-6 py-3 shadow-lg border border-white/20">
+                <span className={`text-sm font-medium ${
+                  getStatusText().includes('Success') 
+                    ? 'text-green-600' 
+                    : getStatusText().includes('Processing')
+                    ? 'text-blue-600'
+                    : getStatusText().includes('Valid') 
+                    ? 'text-green-500' 
+                    : 'text-red-500'
+                }`}>
+                  {getStatusText()}
+                </span>
+              </div>
             </div>
           )}
         </div>
