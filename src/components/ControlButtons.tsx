@@ -11,7 +11,12 @@ const ControlButtons = ({ isProcessing, onStart, onStop, onOptions }: ControlBut
     <div className="flex gap-8 justify-between items-center w-full">
       <button
         onClick={isProcessing ? onStop : onStart}
-        className="bg-blue-500 hover:bg-blue-600 rounded-2xl px-16 py-6 flex items-center justify-center transition-all duration-300 shadow-2xl group"
+        disabled={isProcessing}
+        className={`rounded-2xl px-16 py-6 flex items-center justify-center transition-all duration-300 shadow-2xl group ${
+          isProcessing 
+            ? 'bg-blue-300 cursor-not-allowed' 
+            : 'bg-blue-500 hover:bg-blue-600'
+        }`}
         style={{ 
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
         }}
