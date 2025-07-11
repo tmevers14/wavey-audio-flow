@@ -18,10 +18,10 @@ const ControlButtons = ({ isProcessing, onStart, onStop, onOptions }: ControlBut
       >
         <div className="text-center">
           <div className="text-white font-medium text-xl">
-            {isProcessing ? "Continue" : "Start / Go"}
+            Start / Go
           </div>
           <div className="text-blue-100 text-sm whitespace-nowrap">
-            {isProcessing ? "Continuer | Kontinuar | Continuare" : "Commencer | Empezar | Iniziare"}
+            Commencer | Empezar | Iniziare
           </div>
         </div>
       </button>
