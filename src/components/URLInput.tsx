@@ -52,13 +52,13 @@ const URLInput = ({
 
   const getStatusText = () => {
     if (isProcessing && totalTracks > 0) {
-      return `Processing ${currentTrack}/${totalTracks} | ${Math.round(progress)}% Complete`;
+      return `Processing ${currentTrack}/${totalTracks} | ${Math.round(progress)}%`;
     }
     if (showSuccess || (progress === 100 && !isProcessing)) {
       return 'Success!';
     }
     if (url && !isProcessing) {
-      return isValidUrl(url) ? '✓ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL';
+      return isValidUrl(url) ? '✔ Valid YouTube URL' : '⚠ Please enter a valid YouTube URL';
     }
     return '';
   };
